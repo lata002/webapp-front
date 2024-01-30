@@ -9,8 +9,8 @@ data "azurerm_resource_group" "rg" {
  resource "azurerm_virtual_network" "vnet" {
   name = "webapp-vnet"
   address_space =["10.0.0.0/16"]
-  location = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   }
  
 #create subnet
@@ -38,8 +38,8 @@ resource "azurerm_network_interface" "nic" {
 # Public IP define
 resource "azurerm_public_ip" "public_ip" {
  name = "webapp_pub_ip"
- location = azurerm_resource_group.rg.location
- resource_group_name = azurerm_resource_group.rg.name
+ location = data.azurerm_resource_group.rg.location
+ resource_group_name = data.azurerm_resource_group.rg.name
  allocation_method = "Static"
  }
 
