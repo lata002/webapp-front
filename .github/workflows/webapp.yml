@@ -40,6 +40,6 @@ jobs:
     # Initialize and apply Terraform
     - name: Terraform Init and Apply
       run: |
-        cd terraform
+        cd webapp-front
         terraform init
         terraform apply -auto-approve
