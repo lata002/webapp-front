@@ -1,9 +1,10 @@
 #Create Resource group
-resource "azurerm_resource_group" "rg" {
- name = "webapp-resource-group"
- location = "East US"
- }
- 
+#resource "azurerm_resource_group" "rg" {
+# name = "webapp-resource-group"
+## }
+data "azurerm_resource_group" "rg" {
+  name = "webapp-resource-group"
+}
  #Virtual Network(VPC)
  resource "azurerm_virtual_network" "vnet" {
   name = "webapp-vnet"
