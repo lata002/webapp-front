@@ -5,12 +5,12 @@ on:
     branches:
     - main
     paths:
-    - 'terraform/**'
+    - 'webapp-front/**'
   pull_request:
     branches:
     - main
     paths:
-    - 'terraform/**'
+    - 'webapp-front/**'
   workflow_dispatch:
 
 jobs:
