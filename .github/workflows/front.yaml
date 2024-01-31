@@ -12,6 +12,13 @@ on:
     paths:
       - '*.tf'  
   workflow_dispatch:
+    inputs:
+      resource_type:
+        description: 'Terraform Resource Type (e.g., azurerm_virtual_network.vnet)'
+        required: false
+      resource_id:
+        description: 'Resource ID to Import'
+        required: false
 
 jobs:
   terraform:
@@ -24,6 +31,10 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: '0.12.31'  # Update this to the version you are using
+
+    - name: Terraform Import (if resource_type and resource_id provided)
+      if: github.event.inputs.resource_type && github.event.inputs.resource_id
+      run: terraform import "${{ github.event.inputs.resource_type }}" "${{ github.event.inputs.resource_id }}"
 
     - name: Terraform Init and Apply
       run: |
