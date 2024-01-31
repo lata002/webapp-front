@@ -29,6 +29,15 @@ jobs:
       with:
         terraform_version: '0.12.31'
 
+    - name: Terraform Initialize
+      run: terraform init
+      env:
+        TF_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        TF_VAR_azure_client_id: ${{ secrets.AZURE_AD_CLIENT_ID }}
+        TF_VAR_azure_client_secret: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+        TF_VAR_azure_tenant_id: ${{ secrets.AZURE_AD_TENANT_ID }}
+        TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
+
     - name: Terraform Import Multiple Resources
       if: github.event.inputs.resources
       run: |
@@ -44,10 +53,8 @@ jobs:
         TF_VAR_azure_tenant_id: ${{ secrets.AZURE_AD_TENANT_ID }}
         TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
 
-    - name: Terraform Init and Apply
-      run: |
-        terraform init
-        terraform apply -auto-approve
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
       env:
         TF_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         TF_VAR_azure_client_id: ${{ secrets.AZURE_AD_CLIENT_ID }}
