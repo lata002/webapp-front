@@ -70,8 +70,4 @@ resource "azurerm_linux_virtual_machine" "vm" {
  sku = "18.04_LTS"
  version = "latest"
  }
-resource "azurem_public_ip" "example" { name  = "example-public-ip"
-  resource_group_name = azurem_resources_group.example.name location =
-  azurerm_resource_group.example.location allocation_method  = "Dynamic"
- }
 }
