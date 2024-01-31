@@ -12,6 +12,10 @@ on:
     paths:
       - '*.tf'  
   workflow_dispatch:
+    inputs:
+      resources:
+        description: 'Resources to import (format: type1=id1,type2=id2)'
+        required: false
 
 jobs:
   terraform:
@@ -23,7 +27,16 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: '0.12.31'  # Update this to the version you are using
+        terraform_version: '0.12.31'
+
+    - name: Terraform Import Multiple Resources
+      if: github.event.inputs.resources
+      run: |
+        IFS=',' read -ra ADDR <<< "${{ github.event.inputs.resources }}"
+        for resource in "${ADDR[@]}"; do
+          IFS='=' read -ra RES <<< "$resource"
+          terraform import "${RES[0]}" "${RES[1]}"
+        done
 
     - name: Terraform Init and Apply
       run: |
